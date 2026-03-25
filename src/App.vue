@@ -26,19 +26,18 @@
 import { ref } from 'vue'
 import LoginPage from './components/LoginPage.vue'
 import Base64Page from './components/Base64Page.vue'
-import { clearTokens, hasToken } from './api'
+import { useAuthStore } from './stores/auth'
 
-const isAuthenticated = ref(hasToken())
+const { isAuthenticated, loginSuccess, logout } = useAuthStore()
 const page = ref(isAuthenticated.value ? 'base64' : 'login')
 
 const handleLoginSuccess = () => {
-  isAuthenticated.value = true
+  loginSuccess()
   page.value = 'base64'
 }
 
 const handleLogout = () => {
-  clearTokens()
-  isAuthenticated.value = false
+  logout()
   page.value = 'login'
 }
 
