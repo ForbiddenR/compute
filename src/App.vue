@@ -26,9 +26,7 @@
 import { ref } from 'vue'
 import LoginPage from './components/LoginPage.vue'
 import Base64Page from './components/Base64Page.vue'
-
-const hasToken = () =>
-  Boolean(localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken'))
+import { clearTokens, hasToken } from './api'
 
 const isAuthenticated = ref(hasToken())
 const page = ref(isAuthenticated.value ? 'base64' : 'login')
@@ -39,12 +37,7 @@ const handleLoginSuccess = () => {
 }
 
 const handleLogout = () => {
-  localStorage.removeItem('accessToken')
-  localStorage.removeItem('refreshToken')
-  localStorage.removeItem('user')
-  sessionStorage.removeItem('accessToken')
-  sessionStorage.removeItem('refreshToken')
-  sessionStorage.removeItem('user')
+  clearTokens()
   isAuthenticated.value = false
   page.value = 'login'
 }
