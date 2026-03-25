@@ -42,6 +42,7 @@
 
 <script setup>
 import { reactive, computed, ref } from 'vue'
+import { authFetch } from '../api'
 
 const emit = defineEmits(['login-success'])
 
@@ -68,7 +69,7 @@ const handleSubmit = async () => {
     isSubmitting.value = true
 
     try {
-        const response = await fetch('/api/auth/login', {
+        const response = await authFetch('/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
